@@ -1,6 +1,6 @@
 name: dart_license_checker
 description: Shows you which licenses your dependencies have.
-version: 1.0.0
+version: 1.1.0
 homepage: https://github.com/redsolver/dart_license_checker
 
 environment:

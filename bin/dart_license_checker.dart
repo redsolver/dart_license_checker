@@ -38,6 +38,8 @@ const possibleLicenseFileNames = [
 ];
 
 void main(List<String> arguments) async {
+  final showTransitiveDependencies =
+      arguments.contains('--show-transitive-dependencies');
   final pubspecFile = File('pubspec.yaml');
 
   if (!pubspecFile.existsSync()) {
@@ -65,8 +67,10 @@ void main(List<String> arguments) async {
   for (final package in packageConfig['packages']) {
     final name = package['name'];
 
-    if (!pubspec.dependencies.containsKey(name)) {
-      continue;
+    if (!showTransitiveDependencies) {
+      if (!pubspec.dependencies.containsKey(name)) {
+        continue;
+      }
     }
 
     String rootUri = package['rootUri'];
