@@ -1,3 +1,8 @@
+## 1.2.0
+
+- Migrated to null safety
+- Upgraded dependencies
+
 ## 1.1.1
 
 - Fixed license root uri on Windows #4 (thanks to @PoloLacoste)
