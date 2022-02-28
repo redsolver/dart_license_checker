@@ -77,8 +77,7 @@ void main(List<String> arguments) async {
     if (rootUri.startsWith('file://')) {
       if (Platform.isWindows) {
         rootUri = rootUri.substring(8);
-      }
-      else {
+      } else {
         rootUri = rootUri.substring(7);
       }
     }
