@@ -75,7 +75,12 @@ void main(List<String> arguments) async {
 
     String rootUri = package['rootUri'];
     if (rootUri.startsWith('file://')) {
-      rootUri = rootUri.substring(7);
+      if (Platform.isWindows) {
+        rootUri = rootUri.substring(8);
+      }
+      else {
+        rootUri = rootUri.substring(7);
+      }
     }
 
     LicenseFile license;
