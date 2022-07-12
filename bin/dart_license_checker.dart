@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:barbecue/barbecue.dart';
 import 'package:pana/pana.dart';
 import 'package:pana/src/license.dart';
 import 'package:path/path.dart';
-import 'package:barbecue/barbecue.dart';
 import 'package:tint/tint.dart';
 
 const possibleLicenseFileNames = [
@@ -83,7 +83,7 @@ void main(List<String> arguments) async {
       }
     }
 
-    LicenseFile? license;
+    List<License>? license;
 
     for (final fileName in possibleLicenseFileNames) {
       final file = File(join(rootUri, fileName));
@@ -94,10 +94,10 @@ void main(List<String> arguments) async {
       }
     }
 
-    if (license != null) {
+    if (license != null && license.isNotEmpty) {
       rows.add(Row(cells: [
         Cell(name, style: CellStyle(alignment: TextAlignment.TopRight)),
-        Cell(formatLicenseName(license)),
+        ...license.map((lic) => Cell(formatLicenseSpdx(lic)))
       ]));
     } else {
       rows.add(Row(cells: [
@@ -142,6 +142,20 @@ String formatLicenseName(LicenseFile license) {
     return license.shortFormatted.green();
   } else {
     return license.shortFormatted.yellow();
+  }
+}
+
+String formatLicenseSpdx(License license) {
+  if (license.spdxIdentifier == 'unknown') {
+    return license.spdxIdentifier.red();
+  } else if (copyleftOrProprietaryLicenses
+      .any((str) => str.contains(license.spdxIdentifier))) {
+    return license.spdxIdentifier.red();
+  } else if (permissiveLicenses
+      .any((str) => str.contains(license.spdxIdentifier))) {
+    return license.spdxIdentifier.green();
+  } else {
+    return license.spdxIdentifier.yellow();
   }
 }
 

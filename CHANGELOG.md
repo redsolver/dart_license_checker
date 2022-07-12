@@ -1,3 +1,8 @@
+## 1.2.1
+
+- upgrade dependencies
+- use spdxIdentifier
+
 ## 1.2.0
 
 - Migrated to null safety
